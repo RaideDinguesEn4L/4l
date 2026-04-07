@@ -56,6 +56,31 @@ body {
   transition-delay: 0.4s;
 }
 
+/* Mobile menu animations */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
 @layer components {
   .section-padding {
     @apply py-20 lg:py-32 px-6 lg:px-12;

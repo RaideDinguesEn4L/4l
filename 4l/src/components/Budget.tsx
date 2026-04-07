@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Car, FileCheck, Fuel, Package, Award, Tent, Heart, MessageCircle } from "lucide-react";
 
 // URL HelloAsso - À PERSONNALISER
@@ -42,7 +43,12 @@ const totalBudget = budgetItems.reduce((sum, item) => sum + item.amount, 0);
 const collectedAmount = 3000; // À modifier selon l'avancement
 
 export default function Budget() {
+  const [isClient, setIsClient] = useState(false);
   const progressPercentage = Math.round((collectedAmount / totalBudget) * 100);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <section className="section-padding bg-white">
@@ -60,11 +66,11 @@ export default function Budget() {
         <div className="card mb-12 text-center">
           <div className="max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-4 mb-6">
-              <span className="font-display text-5xl md:text-6xl text-earth-dark">
-                {collectedAmount.toLocaleString()}€
+              <span className="font-display text-5xl md:text-6xl text-earth-dark" suppressHydrationWarning>
+                {isClient ? collectedAmount.toLocaleString() : collectedAmount}€
               </span>
-              <span className="text-earth-brown text-xl">
-                / {totalBudget.toLocaleString()}€
+              <span className="text-earth-brown text-xl" suppressHydrationWarning>
+                / {isClient ? totalBudget.toLocaleString() : totalBudget}€
               </span>
             </div>
             

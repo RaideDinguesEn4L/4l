@@ -11,8 +11,8 @@ const footerLinks = {
   ],
   support: [
     { label: "Devenir partenaire", href: "#partenaires" },
-    { label: "Faire un don", href: "#contact" },
-    { label: "Contact", href: "#contact" },
+    { label: "Faire un don", href: "#contact", id: "don" },
+    { label: "Contact", href: "#contact", id: "contact" },
   ],
 };
 
@@ -58,7 +58,7 @@ export default function Footer() {
             <h4 className="font-display text-lg text-cream mb-4">Nous soutenir</h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
-                <li key={link.href}>
+                <li key={link.id || link.href}>
                   <a
                     href={link.href}
                     className="text-cream/60 hover:text-cream transition-colors"

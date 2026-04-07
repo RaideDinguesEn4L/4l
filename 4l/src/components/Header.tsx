@@ -27,11 +27,23 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-cream/95 backdrop-blur-md shadow-sm py-4"
+          ? "bg-white shadow-md py-4"
           : "bg-transparent py-6"
       }`}
     >
@@ -75,47 +87,82 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Always visible on solid background */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 transition-colors duration-300 ${
-              isScrolled ? "text-earth-dark" : "text-cream"
-            }`}
+            className="lg:hidden p-2 rounded-lg transition-all duration-300 relative z-50 bg-white text-earth-dark shadow-md hover:bg-sand-light border border-sand-warm/30"
             aria-label="Menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </nav>
+      </div>
 
-        {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
         <div
-          className={`lg:hidden absolute top-full left-0 right-0 bg-cream/98 backdrop-blur-md shadow-lg transition-all duration-300 overflow-hidden ${
-            isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="px-6 py-8 flex flex-col gap-4">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-earth-dark text-lg font-medium py-2 border-b border-sand-light/50"
-              >
-                {item.label}
-              </a>
-            ))}
-            <a
-              href={HELLO_ASSO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="btn-primary mt-4 text-center inline-flex items-center justify-center gap-2"
-            >
-              <Heart className="w-4 h-4" />
-              Faire un don
-            </a>
-          </div>
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 animate-fade-in"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Mobile Menu - Full Screen */}
+      <div
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Menu Header */}
+        <div className={`flex items-center justify-between px-6 transition-all duration-500 ${
+          isScrolled ? "py-4" : "py-6"
+        }`}>
+          <span className="font-display text-xl text-earth-dark">Menu</span>
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-2 text-earth-dark hover:bg-sand-light/50 rounded-lg transition-colors"
+            aria-label="Fermer le menu"
+          >
+            <X size={24} />
+          </button>
         </div>
+
+        {/* Menu Items */}
+        <nav className="flex flex-col px-6 py-4 gap-2 overflow-y-auto max-h-[calc(100vh-120px)]">
+          {navItems.map((item, index) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-earth-dark text-lg font-medium py-4 px-4 rounded-xl hover:bg-sand-light/50 transition-all duration-200 border-b border-sand-light/30 last:border-0 active:scale-95"
+              style={{
+                animation: isMobileMenuOpen 
+                  ? `slideInRight 0.3s ease-out ${index * 0.05}s both` 
+                  : "none"
+              }}
+            >
+              {item.label}
+            </a>
+          ))}
+          
+          {/* CTA Button */}
+          <a
+            href={HELLO_ASSO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="btn-primary mt-6 text-center inline-flex items-center justify-center gap-2 py-4 active:scale-95"
+            style={{
+              animation: isMobileMenuOpen 
+                ? `slideInRight 0.3s ease-out ${navItems.length * 0.05}s both` 
+                : "none"
+            }}
+          >
+            <Heart className="w-5 h-5" />
+            Faire un don
+          </a>
+        </nav>
       </div>
     </header>
   );
