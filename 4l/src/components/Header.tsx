@@ -39,6 +39,11 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
+  const handleMenuItemClick = () => {
+    // Fermer le menu immédiatement
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -131,11 +136,18 @@ export default function Header() {
         {/* Menu Items */}
         <nav className="flex flex-col px-6 py-4 gap-2 overflow-y-auto max-h-[calc(100vh-120px)]">
           {navItems.map((item, index) => (
-            <a
+            <button
               key={item.href}
-              href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-earth-dark text-lg font-medium py-4 px-4 rounded-xl hover:bg-sand-light/50 transition-all duration-200 border-b border-sand-light/30 last:border-0 active:scale-95"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setTimeout(() => {
+                  const element = document.querySelector(item.href);
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }}
+              className="text-earth-dark text-lg font-medium py-4 px-4 rounded-xl hover:bg-sand-light/50 transition-all duration-200 border-b border-sand-light/30 last:border-0 active:scale-95 text-left w-full"
               style={{
                 animation: isMobileMenuOpen 
                   ? `slideInRight 0.3s ease-out ${index * 0.05}s both` 
@@ -143,7 +155,7 @@ export default function Header() {
               }}
             >
               {item.label}
-            </a>
+            </button>
           ))}
           
           {/* CTA Button */}
