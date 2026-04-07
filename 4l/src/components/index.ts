@@ -1,0 +1,12 @@
+export { default as Header } from "./Header";
+export { default as Hero } from "./Hero";
+export { default as Projet } from "./Projet";
+export { default as Equipage } from "./Equipage";
+export { default as Trophy } from "./Trophy";
+export { default as Preparation } from "./Preparation";
+export { default as Soutenir } from "./Soutenir";
+export { default as Partenaires } from "./Partenaires";
+export { default as Budget } from "./Budget";
+export { default as Actualites } from "./Actualites";
+export { default as Contact } from "./Contact";
+export { default as Footer } from "./Footer";

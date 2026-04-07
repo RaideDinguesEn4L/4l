@@ -1,0 +1,133 @@
+{
+  "name": "4L Trophy - Formulaire de Contact",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-4l-trophy",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "webhook-node",
+      "name": "Webhook Contact",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "contact-4l-trophy"
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $json.body.email }}",
+        "toEmail": "raid.dingues.en4l@gmail.com",
+        "subject": "=🚗 4L Trophy - {{ $json.body.subject }} - de {{ $json.body.name }}",
+        "emailType": "html",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;\">\n  <div style=\"background: linear-gradient(135deg, #ECC9A1, #D8B08C); padding: 30px; border-radius: 15px 15px 0 0; text-align: center;\">\n    <h1 style=\"color: #4F3E35; margin: 0; font-size: 24px;\">🚗 Nouveau message - 4L Trophy</h1>\n  </div>\n  \n  <div style=\"background: #F7F1EA; padding: 30px; border-radius: 0 0 15px 15px;\">\n    <div style=\"background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;\">\n      <h2 style=\"color: #4F3E35; margin-top: 0; font-size: 18px;\">📋 Informations</h2>\n      <p style=\"color: #887974; margin: 10px 0;\"><strong>Nom :</strong> {{ $json.body.name }}</p>\n      <p style=\"color: #887974; margin: 10px 0;\"><strong>Email :</strong> <a href=\"mailto:{{ $json.body.email }}\" style=\"color: #B49480;\">{{ $json.body.email }}</a></p>\n      <p style=\"color: #887974; margin: 10px 0;\"><strong>Sujet :</strong> {{ $json.body.subject }}</p>\n    </div>\n    \n    <div style=\"background: white; padding: 20px; border-radius: 10px;\">\n      <h2 style=\"color: #4F3E35; margin-top: 0; font-size: 18px;\">💬 Message</h2>\n      <p style=\"color: #4F3E35; line-height: 1.6; white-space: pre-wrap;\">{{ $json.body.message }}</p>\n    </div>\n    \n    <div style=\"text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #D8B08C;\">\n      <p style=\"color: #887974; font-size: 12px;\">Message envoyé depuis le site 4L Trophy</p>\n    </div>\n  </div>\n</div>",
+        "options": {
+          "replyTo": "={{ $json.body.email }}"
+        }
+      },
+      "id": "gmail-node",
+      "name": "Envoyer Email Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [500, 300],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Email envoyé avec succès' }) }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "id": "response-success",
+      "name": "Réponse Succès",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [750, 250]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, message: 'Erreur lors de l\\'envoi de l\\'email' }) }}",
+        "options": {
+          "responseCode": 500,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "response-error",
+      "name": "Réponse Erreur",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [750, 400]
+    }
+  ],
+  "connections": {
+    "Webhook Contact": {
+      "main": [
+        [
+          {
+            "node": "Envoyer Email Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer Email Gmail": {
+      "main": [
+        [
+          {
+            "node": "Réponse Succès",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "4L Trophy"
+    },
+    {
+      "name": "Contact"
+    }
+  ],
+  "triggerCount": 1
+}
