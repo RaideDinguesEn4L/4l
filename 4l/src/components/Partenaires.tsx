@@ -139,10 +139,6 @@ export default function Partenaires() {
                   </li>
                   <li className="flex items-start gap-3 text-white/90">
                     <span className="w-1.5 h-1.5 rounded-full bg-white mt-2 flex-shrink-0" />
-                    Reçu fiscal pour les dons éligibles
-                  </li>
-                  <li className="flex items-start gap-3 text-white/90">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white mt-2 flex-shrink-0" />
                     Votre nom sur notre page de remerciements
                   </li>
                 </ul>

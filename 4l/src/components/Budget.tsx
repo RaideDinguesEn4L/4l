@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Car, FileCheck, Fuel, Package, Award, Tent, Heart, MessageCircle } from "lucide-react";
 
 // URL HelloAsso - À PERSONNALISER
-const HELLO_ASSO_URL = "https://www.helloasso.com/associations/votre-cagnotte";
+const HELLO_ASSO_URL = "https://www.helloasso.com/associations/raid-dingues-en-4l/formulaires/2";
 
 const budgetItems = [
   {
