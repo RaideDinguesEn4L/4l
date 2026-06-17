@@ -59,7 +59,7 @@ export default function ScrollCar() {
         bodyRef.current.style.transform = `scaleX(${facing}) rotate(${tilt}deg) translateY(${bob}px)`;
       }
       const appliedDeg = wheelDeg * facing;
-      wheelRearRef.current?.setAttribute("transform", `rotate(${appliedDeg} 52 108)`);
+      wheelRearRef.current?.setAttribute("transform", `rotate(${appliedDeg} 67 108)`);
       wheelFrontRef.current?.setAttribute("transform", `rotate(${appliedDeg} 144 108)`);
       if (dustRef.current) {
         dustRef.current.style.opacity = String(Math.min(1, speed / 3.5));
@@ -87,13 +87,13 @@ export default function ScrollCar() {
           <svg viewBox="0 0 180 150" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Poussière derrière la voiture */}
             <g ref={dustRef} style={{ opacity: 0 }}>
-              <circle className="car-dust car-dust-1" cx="24" cy="115" r="7" fill="#D8B08C" />
-              <circle className="car-dust car-dust-2" cx="17" cy="105" r="5" fill="#ECC9A1" />
-              <circle className="car-dust car-dust-3" cx="29" cy="122" r="5" fill="#CDA382" />
+              <circle className="car-dust car-dust-1" cx="38" cy="115" r="7" fill="#D8B08C" />
+              <circle className="car-dust car-dust-2" cx="31" cy="105" r="5" fill="#ECC9A1" />
+              <circle className="car-dust car-dust-3" cx="43" cy="122" r="5" fill="#CDA382" />
             </g>
 
             {/* Ombre portée */}
-            <ellipse cx="96" cy="126" rx="72" ry="7" fill="#4F3E35" opacity="0.15" />
+            <ellipse cx="105" cy="126" rx="63" ry="7" fill="#4F3E35" opacity="0.15" />
 
             {/* Corps du véhicule — comprimé verticalement (hauteur réduite, roues inchangées) */}
             <g transform="matrix(1 0 0 0.8 0 22)">
@@ -113,32 +113,32 @@ export default function ScrollCar() {
 
             {/* Carrosserie — silhouette 4L vue de profil (bleu marine) */}
             <path
-              d="M22 110 L25 60 L35 47 Q36 41 42 39 L121 38 Q126 38 128 42 L134 60 L162 67 Q167 68 168 75 L168 104 Q168 110 162 110 L160 110 A16 16 0 0 0 128 110 L68 110 A16 16 0 0 0 36 110 L22 110 Z"
+              d="M43 110 L46 60 L54 47 Q54 41 59 39 L121 38 Q126 38 128 42 L134 60 L162 67 Q167 68 168 75 L168 104 Q168 110 162 110 L160 110 A16 16 0 0 0 128 110 L83 110 A16 16 0 0 0 51 110 L43 110 Z"
               fill="#1E2F52"
             />
             {/* Bas de caisse plus sombre */}
-            <path d="M22 110 L21 101 L167 101 L168 104 Q168 110 162 110 L160 110 A16 16 0 0 0 128 110 L68 110 A16 16 0 0 0 36 110 L22 110 Z" fill="#152138" />
+            <path d="M43 110 L43 101 L167 101 L168 104 Q168 110 162 110 L160 110 A16 16 0 0 0 128 110 L83 110 A16 16 0 0 0 51 110 L43 110 Z" fill="#152138" />
 
             {/* Vitre arrière — coin haut-arrière arrondi, arête arrière en diagonale vers le bas */}
-            <path d="M58 45 L45 45 Q40 45 39 50 L32 59 L58 59 Z" fill="#34425C" />
+            <path d="M72 45 L61 45 Q57 45 56 50 L51 59 L72 59 Z" fill="#34425C" />
             {/* Vitre avant médiane */}
-            <path d="M64 43 L88 43 L88 59 L64 59 Z" fill="#34425C" />
+            <path d="M76 43 L95 43 L95 59 L76 59 Z" fill="#34425C" />
             {/* Vitre avant 1 — collée à l'avant, bas avant incurvé pour épouser la porte */}
-            <path d="M92 43 L118 43 L122 56 Q120 59 112 59 L92 59 Z" fill="#34425C" />
+            <path d="M98 43 L119 43 L122 56 Q120 59 114 59 L98 59 Z" fill="#34425C" />
 
             {/* Liseré orange — bande haute */}
-            <rect x="25" y="69" width="131" height="4.5" fill="#F2871F" />
+            <rect x="46" y="69" width="110" height="4.5" fill="#F2871F" />
             {/* Liseré bas — c'est le bas de caisse entre les deux roues (orange sur la photo) */}
-            <rect x="68" y="101" width="60" height="5" fill="#F2871F" />
+            <rect x="83" y="101" width="45" height="5" fill="#F2871F" />
 
             {/* Lignes de portières */}
-            <line x1="61" y1="69" x2="61" y2="105" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
-            <line x1="90" y1="69" x2="90" y2="105" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
+            <line x1="74" y1="69" x2="74" y2="105" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
+            <line x1="97" y1="69" x2="97" y2="105" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
 
             {/* Plaque numéro de course — centrée entre les deux liserés */}
-            <rect x="105" y="77" width="18" height="13" rx="2" fill="#F7F1EA" />
+            <rect x="101" y="77" width="18" height="13" rx="2" fill="#F7F1EA" />
             <text
-              x="114"
+              x="110"
               y="87"
               textAnchor="middle"
               fontSize="9"
@@ -153,22 +153,22 @@ export default function ScrollCar() {
             <circle cx="158" cy="76" r="4.5" fill="#FFE8A3" stroke="#4F3E35" strokeWidth="1" />
             <rect x="161" y="82" width="5" height="3.5" rx="1" fill="#E8923A" />
             {/* Feu arrière */}
-            <rect x="24" y="72" width="4" height="8" rx="1" fill="#C0392B" />
+            <rect x="45" y="72" width="4" height="8" rx="1" fill="#C0392B" />
 
             {/* Pare-chocs */}
             <rect x="156" y="103" width="14" height="5" rx="2.5" fill="#9DA3A8" />
-            <rect x="20" y="103" width="12" height="5" rx="2.5" fill="#9DA3A8" />
+            <rect x="42" y="103" width="11" height="5" rx="2.5" fill="#9DA3A8" />
             </g>
 
             {/* Roue arrière */}
             <g>
-              <circle cx="52" cy="108" r="16" fill="#2E2A28" />
+              <circle cx="67" cy="108" r="16" fill="#2E2A28" />
               <g ref={wheelRearRef}>
-                <circle cx="52" cy="108" r="8.5" fill="#E8E0D4" />
-                <line x1="52" y1="100.5" x2="52" y2="115.5" stroke="#2E2A28" strokeWidth="2" />
-                <line x1="44.5" y1="108" x2="59.5" y2="108" stroke="#2E2A28" strokeWidth="2" />
+                <circle cx="67" cy="108" r="8.5" fill="#E8E0D4" />
+                <line x1="67" y1="100.5" x2="67" y2="115.5" stroke="#2E2A28" strokeWidth="2" />
+                <line x1="59.5" y1="108" x2="74.5" y2="108" stroke="#2E2A28" strokeWidth="2" />
               </g>
-              <circle cx="52" cy="108" r="2.5" fill="#2E2A28" />
+              <circle cx="67" cy="108" r="2.5" fill="#2E2A28" />
             </g>
 
             {/* Roue avant */}
