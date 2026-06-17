@@ -101,45 +101,50 @@ export default function ScrollCar() {
             <rect x="80" y="35" width="3" height="7" fill="#4F3E35" />
             <rect x="108" y="35" width="3" height="7" fill="#4F3E35" />
             {/* Jerrican */}
-            <rect x="46" y="18" width="13" height="13" rx="1.5" fill="#A8552F" />
-            <rect x="49" y="15" width="5" height="4" rx="1" fill="#A8552F" />
+            <rect x="46" y="18" width="13" height="13" rx="1.5" fill="#F2871F" />
+            <rect x="49" y="15" width="5" height="4" rx="1" fill="#F2871F" />
             {/* Sac / paquetage */}
             <rect x="64" y="21" width="24" height="10" rx="5" fill="#B49480" />
             {/* Roue de secours */}
             <circle cx="103" cy="24" r="9" fill="#2E2A28" />
             <circle cx="103" cy="24" r="4" fill="#E8E0D4" />
 
-            {/* Carrosserie — silhouette 4L vue de profil */}
+            {/* Carrosserie — silhouette 4L vue de profil (bleu marine) */}
             <path
               d="M14 100 L10 70 L14 50 Q15 44 22 43 L132 41 Q139 41 142 46 L154 64 L192 66 Q201 67 203 74 L206 94 Q206 100 200 100 L198 100 A25 25 0 0 0 158 100 L76 100 A25 25 0 0 0 36 100 L14 100 Z"
-              fill="#5B8DB8"
+              fill="#1E2F52"
             />
             {/* Bas de caisse plus sombre */}
-            <path d="M14 100 L12 86 L205 86 L206 94 Q206 100 200 100 L198 100 A25 25 0 0 0 158 100 L76 100 A25 25 0 0 0 36 100 L14 100 Z" fill="#46708F" />
+            <path d="M14 100 L12 86 L205 86 L206 94 Q206 100 200 100 L198 100 A25 25 0 0 0 158 100 L76 100 A25 25 0 0 0 36 100 L14 100 Z" fill="#152138" />
 
-            {/* Vitres latérales */}
-            <rect x="27" y="46" width="106" height="15" rx="3" fill="#D7E8F0" />
-            <rect x="62" y="46" width="5" height="15" fill="#5B8DB8" />
-            <rect x="100" y="46" width="5" height="15" fill="#5B8DB8" />
+            {/* Vitres latérales (teintées) */}
+            <rect x="27" y="46" width="106" height="15" rx="3" fill="#34425C" />
+            <rect x="62" y="46" width="5" height="15" fill="#1E2F52" />
+            <rect x="100" y="46" width="5" height="15" fill="#1E2F52" />
             {/* Pare-brise incliné */}
-            <path d="M139 47 L150 63 L143 63 L133 47 Z" fill="#D7E8F0" />
+            <path d="M139 47 L150 63 L143 63 L133 47 Z" fill="#34425C" />
+
+            {/* Liseré orange — bande haute */}
+            <rect x="13" y="69" width="180" height="4.5" fill="#F2871F" />
+            {/* Liseré bas — entre les deux roues */}
+            <rect x="76" y="94" width="82" height="4" fill="#F2871F" />
 
             {/* Lignes de portières */}
-            <line x1="65" y1="64" x2="65" y2="84" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
-            <line x1="103" y1="64" x2="103" y2="84" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
+            <line x1="65" y1="69" x2="65" y2="93" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
+            <line x1="103" y1="69" x2="103" y2="93" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
 
-            {/* Cocarde de rallye */}
-            <circle cx="86" cy="76" r="12" fill="#F7F1EA" />
+            {/* Plaque numéro de course — centrée entre les deux liserés */}
+            <rect x="74" y="77" width="24" height="13" rx="2" fill="#F7F1EA" />
             <text
               x="86"
-              y="81"
+              y="87"
               textAnchor="middle"
-              fontSize="11"
+              fontSize="10"
               fontWeight="bold"
-              fill="#4F3E35"
+              fill="#2E2A28"
               fontFamily="sans-serif"
             >
-              4L
+              235
             </text>
 
             {/* Phare avant + clignotant */}
