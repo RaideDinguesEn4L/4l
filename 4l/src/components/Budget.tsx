@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Car, FileCheck, Fuel, Package, Award, Tent, Heart, MessageCircle } from "lucide-react";
+import CountUp from "./CountUp";
 
 // URL HelloAsso - À PERSONNALISER
 const HELLO_ASSO_URL = "https://www.helloasso.com/associations/raid-dingues-en-4l/formulaires/2";
@@ -44,10 +45,30 @@ const collectedAmount = 3000; // À modifier selon l'avancement
 
 export default function Budget() {
   const [isClient, setIsClient] = useState(false);
+  const [barVisible, setBarVisible] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
   const progressPercentage = Math.round((collectedAmount / totalBudget) * 100);
 
   useEffect(() => {
     setIsClient(true);
+  }, []);
+
+  // La barre se remplit quand elle entre dans le viewport
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setBarVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -66,18 +87,18 @@ export default function Budget() {
         <div className="card mb-12 text-center">
           <div className="max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-4 mb-6">
-              <span className="font-display text-5xl md:text-6xl text-earth-dark" suppressHydrationWarning>
-                {isClient ? collectedAmount.toLocaleString() : collectedAmount}€
+              <span className="font-display text-5xl md:text-6xl text-earth-dark">
+                <CountUp end={collectedAmount} suffix="€" />
               </span>
               <span className="text-earth-brown text-xl" suppressHydrationWarning>
-                / {isClient ? totalBudget.toLocaleString() : totalBudget}€
+                / {isClient ? totalBudget.toLocaleString("fr-FR") : totalBudget}€
               </span>
             </div>
-            
-            <div className="h-4 bg-gray-100 rounded-full overflow-hidden mb-4">
+
+            <div ref={barRef} className="h-4 bg-gray-100 rounded-full overflow-hidden mb-4">
               <div
-                className="h-full bg-gradient-to-r from-sand-warm via-earth-rose to-earth-taupe rounded-full transition-all duration-1000"
-                style={{ width: `${progressPercentage}%` }}
+                className="h-full bg-gradient-to-r from-sand-warm via-earth-rose to-earth-taupe rounded-full transition-all duration-[1500ms] ease-out"
+                style={{ width: barVisible ? `${progressPercentage}%` : "0%" }}
               />
             </div>
             

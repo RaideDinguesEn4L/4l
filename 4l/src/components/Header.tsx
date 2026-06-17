@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X, Heart } from "lucide-react";
 
 // URL HelloAsso - À PERSONNALISER
@@ -18,12 +18,22 @@ const navItems = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Barre de progression de lecture (mise à jour directe, sans re-render)
+      if (progressRef.current) {
+        const maxScroll =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+        progressRef.current.style.width = `${progress}%`;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -52,6 +62,13 @@ export default function Header() {
           : "bg-transparent py-6"
       }`}
     >
+      {/* Barre de progression de lecture */}
+      <div
+        ref={progressRef}
+        className="absolute top-0 left-0 h-[3px] bg-gradient-to-r from-sand-warm via-earth-rose to-earth-taupe transition-[width] duration-150 ease-out"
+        style={{ width: "0%" }}
+      />
+
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <nav className="flex items-center justify-between">
           {/* Logo */}
@@ -70,7 +87,7 @@ export default function Header() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors duration-300 hover:opacity-70 ${
+                className={`relative text-sm font-medium transition-colors duration-300 after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:rounded-full after:bg-current after:transition-all after:duration-300 hover:after:w-full ${
                   isScrolled ? "text-earth-dark" : "text-cream"
                 }`}
               >

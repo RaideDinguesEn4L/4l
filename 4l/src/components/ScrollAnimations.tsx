@@ -64,7 +64,9 @@ export default function ScrollAnimations() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const elements = document.querySelectorAll('.scroll-reveal');
+    const elements = document.querySelectorAll(
+      '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale'
+    );
     elements.forEach((el) => observer.observe(el));
 
     // Event listener pour smooth scroll avec capture phase

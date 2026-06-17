@@ -2,12 +2,13 @@
 
 import { MapPin, Calendar, Flag, Award } from "lucide-react";
 import Image from "next/image";
+import CountUp from "./CountUp";
 
 const stats = [
-  { icon: MapPin, value: "6000+", label: "Kilomètres" },
-  { icon: Calendar, value: "10", label: "Jours d'aventure" },
-  { icon: Flag, value: "3", label: "Pays traversés" },
-  { icon: Award, value: "1200+", label: "Équipages" },
+  { icon: MapPin, end: 6000, suffix: "+", label: "Kilomètres" },
+  { icon: Calendar, end: 10, suffix: "", label: "Jours d'aventure" },
+  { icon: Flag, end: 3, suffix: "", label: "Pays traversés" },
+  { icon: Award, end: 1200, suffix: "+", label: "Équipages" },
 ];
 
 export default function Trophy() {
@@ -63,7 +64,7 @@ export default function Trophy() {
               >
                 <stat.icon className="w-8 h-8 text-sand-light mx-auto mb-4 drop-shadow-md" />
                 <div className="font-display text-4xl md:text-5xl text-cream mb-2 drop-shadow-md">
-                  {stat.value}
+                  <CountUp end={stat.end} suffix={stat.suffix} />
                 </div>
                 <div className="text-cream text-sm font-medium uppercase tracking-wider">
                   {stat.label}

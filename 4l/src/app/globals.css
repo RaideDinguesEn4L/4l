@@ -25,18 +25,77 @@ body {
   font-family: var(--font-inter);
   background-color: #F7F1EA;
   color: #4F3E35;
+  /* Évite tout débordement horizontal pendant les reveals latéraux */
+  overflow-x: clip;
+}
+
+/* Scrollbar personnalisée aux couleurs du désert */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F1EA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B49480;
+  border-radius: 9999px;
+  border: 2px solid #F7F1EA;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #887974;
+}
+
+/* Sélection de texte */
+::selection {
+  background-color: #D8B08C;
+  color: #4F3E35;
 }
 
 /* Animations de scroll reveal */
-.scroll-reveal {
+.scroll-reveal,
+.scroll-reveal-left,
+.scroll-reveal-right,
+.scroll-reveal-scale {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
 
-.scroll-reveal.reveal-visible {
+.scroll-reveal {
+  transform: translateY(30px);
+}
+
+.scroll-reveal-left {
+  transform: translateX(-48px);
+}
+
+.scroll-reveal-right {
+  transform: translateX(48px);
+}
+
+.scroll-reveal-scale {
+  transform: scale(0.94);
+}
+
+.scroll-reveal.reveal-visible,
+.scroll-reveal-left.reveal-visible,
+.scroll-reveal-right.reveal-visible,
+.scroll-reveal-scale.reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Delays pour les animations en cascade */
@@ -81,6 +140,58 @@ body {
   animation: fadeIn 0.2s ease-out;
 }
 
+/* Poussière soulevée par la 4L qui roule au scroll */
+@keyframes dustPuff {
+  0% {
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-26px, -14px) scale(1.6);
+    opacity: 0;
+  }
+}
+
+.car-dust {
+  animation: dustPuff 0.7s ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.car-dust-2 {
+  animation-duration: 0.9s;
+  animation-delay: 0.25s;
+}
+
+.car-dust-3 {
+  animation-duration: 0.6s;
+  animation-delay: 0.45s;
+}
+
+/* Animations d'entrée du Hero (cascade) */
+@keyframes heroUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-enter {
+  opacity: 0;
+  animation: heroUp 0.9s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 @layer components {
   .section-padding {
     @apply py-20 lg:py-32 px-6 lg:px-12;
@@ -88,6 +199,12 @@ body {
 
   .section-title {
     @apply font-display text-4xl md:text-5xl lg:text-6xl mb-4 tracking-wide;
+  }
+
+  /* Petit trait dégradé sous chaque titre de section (tous centrés) */
+  .section-title::after {
+    content: "";
+    @apply block w-16 h-1 mx-auto mt-4 rounded-full bg-gradient-to-r from-sand-warm to-earth-rose;
   }
 
   .section-subtitle {
@@ -103,7 +220,7 @@ body {
   }
 
   .card {
-    @apply p-6 bg-white rounded-2xl shadow-lg border border-sand-warm/20 hover:shadow-xl transition-shadow;
+    @apply p-6 bg-white rounded-2xl shadow-lg border border-sand-warm/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
   }
 
   .glass-card {
