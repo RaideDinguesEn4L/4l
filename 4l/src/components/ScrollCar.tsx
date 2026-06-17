@@ -95,6 +95,8 @@ export default function ScrollCar() {
             {/* Ombre portée */}
             <ellipse cx="96" cy="126" rx="72" ry="7" fill="#4F3E35" opacity="0.15" />
 
+            {/* Corps du véhicule — comprimé verticalement (hauteur réduite, roues inchangées) */}
+            <g transform="matrix(1 0 0 0.8 0 22)">
             {/* Galerie de toit + chargement — avancée, bord avant aligné au toit */}
             <rect x="59" y="28" width="62" height="4" rx="2" fill="#4F3E35" />
             <rect x="65" y="32" width="3" height="6" fill="#4F3E35" />
@@ -111,27 +113,27 @@ export default function ScrollCar() {
 
             {/* Carrosserie — silhouette 4L vue de profil (bleu marine) */}
             <path
-              d="M22 104 L19 68 L23 47 Q23 40 28 39 L121 38 Q126 38 128 42 L134 60 L162 67 Q167 68 168 75 L168 98 Q168 104 162 104 L160 104 A17 17 0 0 0 128 104 L68 104 A17 17 0 0 0 36 104 L22 104 Z"
+              d="M22 110 L25 60 L35 47 Q36 41 42 39 L121 38 Q126 38 128 42 L134 60 L162 67 Q167 68 168 75 L168 104 Q168 110 162 110 L160 110 A16 16 0 0 0 128 110 L68 110 A16 16 0 0 0 36 110 L22 110 Z"
               fill="#1E2F52"
             />
             {/* Bas de caisse plus sombre */}
-            <path d="M22 104 L20 86 L167 86 L168 98 Q168 104 162 104 L160 104 A17 17 0 0 0 128 104 L68 104 A17 17 0 0 0 36 104 L22 104 Z" fill="#152138" />
+            <path d="M22 110 L21 101 L167 101 L168 104 Q168 110 162 110 L160 110 A16 16 0 0 0 128 110 L68 110 A16 16 0 0 0 36 110 L22 110 Z" fill="#152138" />
 
-            {/* Vitre arrière — plus petite, angle bas arrière incurvé */}
-            <path d="M34 45 L58 45 L58 59 L41 59 Q34 59 34 51 Z" fill="#34425C" />
+            {/* Vitre arrière — coin haut-arrière arrondi, arête arrière en diagonale vers le bas */}
+            <path d="M58 45 L45 45 Q40 45 39 50 L32 59 L58 59 Z" fill="#34425C" />
             {/* Vitre avant médiane */}
             <path d="M64 43 L88 43 L88 59 L64 59 Z" fill="#34425C" />
             {/* Vitre avant 1 — collée à l'avant, bas avant incurvé pour épouser la porte */}
             <path d="M92 43 L118 43 L122 56 Q120 59 112 59 L92 59 Z" fill="#34425C" />
 
             {/* Liseré orange — bande haute */}
-            <rect x="20" y="69" width="136" height="4.5" fill="#F2871F" />
-            {/* Liseré bas — entre les deux roues */}
-            <rect x="68" y="94" width="60" height="4" fill="#F2871F" />
+            <rect x="25" y="69" width="131" height="4.5" fill="#F2871F" />
+            {/* Liseré bas — c'est le bas de caisse entre les deux roues (orange sur la photo) */}
+            <rect x="68" y="101" width="60" height="5" fill="#F2871F" />
 
             {/* Lignes de portières */}
-            <line x1="61" y1="69" x2="61" y2="97" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
-            <line x1="90" y1="69" x2="90" y2="97" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
+            <line x1="61" y1="69" x2="61" y2="105" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
+            <line x1="90" y1="69" x2="90" y2="105" stroke="#2E2A28" strokeWidth="1.5" opacity="0.25" />
 
             {/* Plaque numéro de course — centrée entre les deux liserés */}
             <rect x="105" y="77" width="18" height="13" rx="2" fill="#F7F1EA" />
@@ -151,11 +153,12 @@ export default function ScrollCar() {
             <circle cx="158" cy="76" r="4.5" fill="#FFE8A3" stroke="#4F3E35" strokeWidth="1" />
             <rect x="161" y="82" width="5" height="3.5" rx="1" fill="#E8923A" />
             {/* Feu arrière */}
-            <rect x="18" y="72" width="4" height="8" rx="1" fill="#C0392B" />
+            <rect x="24" y="72" width="4" height="8" rx="1" fill="#C0392B" />
 
             {/* Pare-chocs */}
-            <rect x="156" y="92" width="14" height="5" rx="2.5" fill="#9DA3A8" />
-            <rect x="15" y="92" width="12" height="5" rx="2.5" fill="#9DA3A8" />
+            <rect x="156" y="103" width="14" height="5" rx="2.5" fill="#9DA3A8" />
+            <rect x="20" y="103" width="12" height="5" rx="2.5" fill="#9DA3A8" />
+            </g>
 
             {/* Roue arrière */}
             <g>
