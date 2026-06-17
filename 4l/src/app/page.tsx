@@ -13,13 +13,15 @@ import {
   Footer,
 } from "@/components";
 import ScrollAnimations from "@/components/ScrollAnimations";
+import RoadTrip from "@/components/RoadTrip";
 
 export default function Home() {
   return (
     <>
       <ScrollAnimations />
       <Header />
-      <main>
+      <main className="relative">
+        <RoadTrip />
         <Hero />
         <div className="scroll-reveal">
           <Projet />
