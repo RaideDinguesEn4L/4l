@@ -9,9 +9,6 @@ const HERO_IMAGE = "/images/hero/desert.jpg";
 // Date cible du départ
 const TARGET_DATE = new Date("2027-02-17T08:00:00");
 
-// URL HelloAsso - À PERSONNALISER
-const HELLO_ASSO_URL = "https://www.helloasso.com/associations/raid-dingues-en-4l/formulaires/2";
-
 interface TimeLeft {
   days: number;
   hours: number;
@@ -19,7 +16,7 @@ interface TimeLeft {
   seconds: number;
 }
 
-export default function Hero() {
+export default function Hero({ helloAssoUrl }: { helloAssoUrl: string }) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
@@ -145,7 +142,7 @@ export default function Hero() {
           style={{ animationDelay: "0.85s" }}
         >
           <a
-            href={HELLO_ASSO_URL}
+            href={helloAssoUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 bg-cream text-earth-dark rounded-full font-medium hover:bg-sand-light transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"

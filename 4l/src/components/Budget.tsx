@@ -1,53 +1,27 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Car, FileCheck, Fuel, Package, Award, Tent, Heart, MessageCircle } from "lucide-react";
+import { Heart, MessageCircle } from "lucide-react";
 import CountUp from "./CountUp";
+import { iconFor } from "@/lib/icons";
+import type { BudgetItem } from "@/lib/content-types";
 
-// URL HelloAsso - À PERSONNALISER
-const HELLO_ASSO_URL = "https://www.helloasso.com/associations/raid-dingues-en-4l/formulaires/2";
+type Props = {
+  items: BudgetItem[];
+  collectedAmount: number;
+  helloAssoUrl: string;
+};
 
-const budgetItems = [
-  {
-    icon: Award,
-    label: "Inscription au rallye",
-    amount: 3540,
-    description: "Frais d'inscription officielle au 4L Trophy",
-  },
-  {
-    icon: Car,
-    label: "Achat de la 4L",
-    amount: 6000,
-    description: "Acquisition du véhicule",
-  },
-  {
-    icon: FileCheck,
-    label: "Préparation mécanique",
-    amount: 1000,
-    description: "Révision complète et modifications",
-  },
-  {
-    icon: Fuel,
-    label: "Carburant",
-    amount: 1000,
-    description: "Essence pour 6000 km",
-  },
-  {
-    icon: Tent,
-    label: "Équipement",
-    amount: 700,
-    description: "Matériel de camping, navigation, sécurité",
-  }
-];
-
-const totalBudget = budgetItems.reduce((sum, item) => sum + item.amount, 0);
-const collectedAmount = 3000; // À modifier selon l'avancement
-
-export default function Budget() {
+export default function Budget({ items, collectedAmount, helloAssoUrl }: Props) {
   const [isClient, setIsClient] = useState(false);
   const [barVisible, setBarVisible] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
-  const progressPercentage = Math.round((collectedAmount / totalBudget) * 100);
+
+  // L'objectif est la somme des postes saisis dans l'admin : ajouter une ligne
+  // de budget déplace la cible, on ne le saisit pas deux fois.
+  const totalBudget = items.reduce((sum, item) => sum + item.amount, 0);
+  const progressPercentage =
+    totalBudget > 0 ? Math.round((collectedAmount / totalBudget) * 100) : 0;
 
   useEffect(() => {
     setIsClient(true);
@@ -115,11 +89,13 @@ export default function Budget() {
           </h3>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {budgetItems.map((item) => (
-              <div key={item.label} className="card">
+            {items.map((item) => {
+              const Icon = iconFor(item.icon);
+              return (
+              <div key={item.id} className="card">
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-sand-light rounded-xl">
-                    <item.icon className="w-6 h-6 text-earth-dark" />
+                    <Icon className="w-6 h-6 text-earth-dark" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
@@ -136,14 +112,15 @@ export default function Budget() {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
-          <a 
-            href={HELLO_ASSO_URL}
+          <a
+            href={helloAssoUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-flex items-center gap-2"

@@ -1,0 +1,9 @@
+# `npm ci` tourne dans l'image : recopier les node_modules de l'hôte par-dessus
+# écraserait l'installation propre (et alourdit le contexte de build).
+node_modules
+.next
+.git
+
+# `.env.local` est volontairement ABSENT de cette liste : `next build` y lit les
+# NEXT_PUBLIC_* et les inline dans le bundle. Sans lui, le site se construirait
+# sans Supabase et /admin serait inutilisable.

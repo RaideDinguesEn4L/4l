@@ -1,24 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import type { CrewMember } from "@/lib/content-types";
 
-// Images locales dans public/images/team/
-const teamMembers = [
-  {
-    name: "Théo",
-    role: "Pilote",
-    bio: "Passionné de voiture, de voyage et de sport, le 4L Trophy va me permettre de réunir ces 3 passions et de découvrir l'humanitaire.",
-    image: "/images/team/theo2.png",
-  },
-  {
-    name: "Léa",
-    role: "Co-pilote & Navigation",
-    bio: "Passionnée de voyage et rêvant de réaliser une action humanitaire, c'est le moment pour apporter mon aide.",
-    image: "/images/team/Lea.JPG",
-  },
-];
+type Props = {
+  members: CrewMember[];
+};
 
-export default function Equipage() {
+export default function Equipage({ members }: Props) {
   return (
     <section id="equipage" className="section-padding bg-white">
       <div className="max-w-6xl mx-auto">
@@ -32,20 +21,22 @@ export default function Equipage() {
 
         {/* Team Cards */}
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
-          {teamMembers.map((member, index) => (
+          {members.map((member, index) => (
             <div
-              key={member.name}
+              key={member.id}
               className="group relative bg-cream rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
             >
               {/* Image */}
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+              <div className="aspect-[4/3] overflow-hidden relative bg-sand-light">
+                {member.image_url && (
+                  <Image
+                    src={member.image_url}
+                    alt={member.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                )}
               </div>
 
               {/* Content */}
@@ -56,7 +47,7 @@ export default function Equipage() {
                 <h3 className="font-display text-3xl text-earth-dark mb-3">
                   {member.name}
                 </h3>
-                <p className="text-earth-brown leading-relaxed">
+                <p className="text-earth-brown leading-relaxed whitespace-pre-line">
                   {member.bio}
                 </p>
               </div>

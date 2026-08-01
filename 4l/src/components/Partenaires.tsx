@@ -1,18 +1,14 @@
 "use client";
 
 import { Heart, Sparkles, MessageCircle } from "lucide-react";
+import type { Partner } from "@/lib/content-types";
 
-// Logos des partenaires - À remplacer par les vrais logos
-const partners = [
-  { name: "Nantiat", logo: "/images/partenaires/nantiat.jpeg", url: "https://www.instagram.com/uexpressnantiat?igsh=c3hhaTc4dDN1eGM2" },
-  { name: "Laserdistri service 2", logo: "/images/partenaires/laserdistri_service.jpeg", url: "https://www.instagram.com/laserdistri.service?igsh=a21yYno1MDRndHdl" },
-  { name: "Eco Vidange", logo: "/images/partenaires/eco_vidange.jpeg", url: "https://ecovidange-nouvelle-aquitaine-87.fr/" },
-];
+type Props = {
+  partners: Partner[];
+  helloAssoUrl: string;
+};
 
-// URL de votre cagnotte HelloAsso - À PERSONNALISER
-const HELLO_ASSO_URL = "https://www.helloasso.com/associations/raid-dingues-en-4l/formulaires/2";
-
-export default function Partenaires() {
+export default function Partenaires({ partners, helloAssoUrl }: Props) {
   return (
     <section id="partenaires" className="section-padding bg-cream">
       <div className="max-w-6xl mx-auto">
@@ -31,24 +27,25 @@ export default function Partenaires() {
             Ils nous font confiance
           </h3>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-            {partners.map((partner, index) => (
+            {partners.map((partner) => (
               <a
-                key={index}
-                href={partner.url}
+                key={partner.id}
+                href={partner.url ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-2xl shadow-sm flex items-center justify-center p-6 hover:shadow-md transition-shadow cursor-pointer"
                 title={`Visiter le site de ${partner.name}`}
               >
-                {partner.logo ? (
+                {partner.logo_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- logos de tailles très variables, `object-contain` sans dimensions connues
                   <img
-                    src={partner.logo}
+                    src={partner.logo_url}
                     alt={partner.name}
                     className="max-w-full max-h-full object-contain"
                   />
                 ) : (
                   <span className="text-earth-taupe text-center text-sm">
-                    Votre logo ici
+                    {partner.name}
                   </span>
                 )}
               </a>
@@ -144,7 +141,7 @@ export default function Partenaires() {
                 </ul>
                 
                 <a
-                  href={HELLO_ASSO_URL}
+                  href={helloAssoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 bg-white text-earth-dark px-6 py-3 rounded-full font-medium hover:bg-cream transition-all duration-300 shadow-lg hover:shadow-xl mt-auto"

@@ -1,42 +1,16 @@
 "use client";
 
-import { Wrench, Car, CheckCircle2, Clock } from "lucide-react";
 import Image from "next/image";
+import { iconFor } from "@/lib/icons";
+import { PREP_STATUS, type PrepStep, type Settings } from "@/lib/content-types";
 
-const preparationSteps = [
-  {
-    icon: Car,
-    title: "Acquisition",
-    description: "Trouver notre 4L, vérifier son état général et réaliser l'achat.",
-    status: "done",
-  },
-    {
-    icon: CheckCircle2,
-    title: "Homologation",
-    description: "Préparation aux contrôles techniques et mise aux normes rallye.",
-    status: "done",
-  },
-  {
-    icon: Wrench,
-    title: "Mécanique",
-    description: "Révision complète : moteur, freins, suspension, transmission, électriques, etc.",
-    status: "in-progress",
-  },
-  {
-    icon: Clock,
-    title: "Équipement",
-    description: "Installation du matériel de sécurité, navigation et camping.",
-    status: "pending",
-  },
-];
-
-const statusConfig = {
-  done: { label: "Terminé", class: "bg-green-100 text-green-700" },
-  "in-progress": { label: "En cours", class: "bg-sand-light text-earth-dark" },
-  pending: { label: "À venir", class: "bg-gray-100 text-gray-500" },
+type Props = {
+  steps: PrepStep[];
+  settings: Settings;
 };
 
-export default function Preparation() {
+export default function Preparation({ steps, settings }: Props) {
+  const progress = Number(settings.prep_progress) || 0;
   return (
     <section id="preparation" className="section-padding bg-cream">
       <div className="max-w-6xl mx-auto">
@@ -53,34 +27,39 @@ export default function Preparation() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Car Image & Description */}
           <div className="space-y-8">
-            <div className="relative rounded-3xl overflow-hidden shadow-lg aspect-[4/3]">
-              <Image
-                src="/images/car/4l-main.png"
-                alt="Notre 4L en préparation"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
+            <div className="relative rounded-3xl overflow-hidden shadow-lg aspect-[4/3] bg-sand-light">
+              {settings.prep_car_image && (
+                <Image
+                  src={settings.prep_car_image}
+                  alt="Notre 4L en préparation"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              )}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-earth-dark/80 to-transparent p-6 z-10">
                 <span className="font-display text-2xl text-cream">
-                  Renault 4L - 1985
+                  {settings.prep_car_caption}
                 </span>
               </div>
             </div>
 
             <div className="card">
               <h3 className="font-display text-2xl text-earth-dark mb-4">
-                Notre Monture
+                {settings.prep_car_title}
               </h3>
-              <p className="text-earth-brown leading-relaxed mb-4">
-               Monique est une Renault 4 GTL de 1985, moteur Billancourt de 845 cm³. 
-                Elle a parcouru 150 000 km dont un 4L Trophy en 2025, elle est également la première 4L Trophy à avoir été exposée au Mondial de l'auto.
-              </p>
-              <p className="text-earth-brown leading-relaxed">
-                Nous la préparons avec amour : révision complète de la mécanique, 
-                 protection du dessous de caisse... 
-                Elle sera prête à affronter le désert !
-              </p>
+              {/* Un paragraphe par ligne vide dans le texte saisi. */}
+              {settings.prep_car_text
+                .split(/\n\s*\n/)
+                .filter(Boolean)
+                .map((paragraph, index) => (
+                  <p
+                    key={index}
+                    className="text-earth-brown leading-relaxed mb-4 last:mb-0 whitespace-pre-line"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
             </div>
           </div>
 
@@ -90,25 +69,27 @@ export default function Preparation() {
               Étapes de préparation
             </h3>
             
-            {preparationSteps.map((step, index) => (
+            {steps.map((step) => {
+              const Icon = iconFor(step.icon);
+              return (
               <div
-                key={step.title}
+                key={step.id}
                 className={`card flex items-start gap-5 transition-all duration-300 ${
                   step.status === "in-progress" ? "ring-2 ring-sand-warm" : ""
                 }`}
               >
                 <div className={`p-3 rounded-2xl ${
-                  step.status === "done" 
-                    ? "bg-green-100" 
-                    : step.status === "in-progress" 
-                    ? "bg-sand-light" 
+                  step.status === "done"
+                    ? "bg-green-100"
+                    : step.status === "in-progress"
+                    ? "bg-sand-light"
                     : "bg-gray-100"
                 }`}>
-                  <step.icon className={`w-6 h-6 ${
-                    step.status === "done" 
-                      ? "text-green-600" 
-                      : step.status === "in-progress" 
-                      ? "text-earth-dark" 
+                  <Icon className={`w-6 h-6 ${
+                    step.status === "done"
+                      ? "text-green-600"
+                      : step.status === "in-progress"
+                      ? "text-earth-dark"
                       : "text-gray-400"
                   }`} />
                 </div>
@@ -118,17 +99,18 @@ export default function Preparation() {
                       {step.title}
                     </h4>
                     <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                      statusConfig[step.status as keyof typeof statusConfig].class
+                      PREP_STATUS[step.status].class
                     }`}>
-                      {statusConfig[step.status as keyof typeof statusConfig].label}
+                      {PREP_STATUS[step.status].label}
                     </span>
                   </div>
-                  <p className="text-earth-brown text-sm">
+                  <p className="text-earth-brown text-sm whitespace-pre-line">
                     {step.description}
                   </p>
                 </div>
               </div>
-            ))}
+              );
+            })}
 
             {/* Progress Bar */}
             <div className="mt-8 p-6 bg-white rounded-2xl">
@@ -136,12 +118,12 @@ export default function Preparation() {
                 <span className="text-sm font-medium text-earth-dark">
                   Progression globale
                 </span>
-                <span className="text-sm font-semibold text-earth-dark">60%</span>
+                <span className="text-sm font-semibold text-earth-dark">{progress}%</span>
               </div>
               <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-sand-warm to-earth-rose rounded-full transition-all duration-500"
-                  style={{ width: "60%" }}
+                  style={{ width: `${progress}%` }}
                 />
               </div>
             </div>

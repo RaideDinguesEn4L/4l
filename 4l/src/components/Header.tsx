@@ -3,9 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, Heart } from "lucide-react";
 
-// URL HelloAsso - À PERSONNALISER
-const HELLO_ASSO_URL = "https://www.helloasso.com/associations/raid-dingues-en-4l/formulaires/2";
-
 const navItems = [
   { label: "Le Projet", href: "#projet" },
   { label: "L'Équipage", href: "#equipage" },
@@ -15,7 +12,7 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Header() {
+export default function Header({ helloAssoUrl }: { helloAssoUrl: string }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -95,7 +92,7 @@ export default function Header() {
               </a>
             ))}
             <a
-              href={HELLO_ASSO_URL}
+              href={helloAssoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={`ml-4 px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 inline-flex items-center gap-2 ${
@@ -177,7 +174,7 @@ export default function Header() {
           
           {/* CTA Button */}
           <a
-            href={HELLO_ASSO_URL}
+            href={helloAssoUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsMobileMenuOpen(false)}

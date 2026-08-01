@@ -7,5 +7,10 @@ services:
     restart: unless-stopped
     ports:
       - "8081:3000"
+    # Les NEXT_PUBLIC_* sont inlinées au build (via `.env.local`, présent dans le
+    # contexte) ; on les repasse au runtime pour que les routes serveur — dont
+    # /api/revalidate — lisent les mêmes valeurs après un simple redémarrage.
+    env_file:
+      - .env.local
     environment:
       - NODE_ENV=production
